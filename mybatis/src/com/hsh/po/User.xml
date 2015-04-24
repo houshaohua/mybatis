@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">  
+<mapper namespace="com.hsh.po.User">
+	<!-- 通用代码片段 -->
+	<sql id="colsWithoutId">
+		name,password,age
+	</sql>
+	<!-- 通用代码片段 -->
+	<sql id="colsWithId">
+		id,name,password,age
+	</sql>
+	<!-- 添加用户 -->  
+	<insert id="insert" parameterType="com.hsh.po.User" useGeneratedKeys="true" keyProperty="id">  
+        INSERT INTO user (<include refid="colsWithoutId"/>) 
+        VALUES ( #{name},#{password},#{age}) 
+    </insert>
+    <!-- 修改用户 -->
+    <update id="update" parameterType="com.hsh.po.User">  
+        UPDATE user SET 
+            name = #{name},password = #{password},age = #{age} 
+        WHERE  
+            id = #{id}  
+    </update>
+    <!-- 删除用户 -->
+    <delete id="delete" parameterType="Integer">  
+        DELETE FROM user WHERE id = #{id}  
+    </delete>  
+    <!-- 根据Id查询一个用户 -->
+     <select id="selectById" resultType="com.hsh.po.User" parameterType="Integer">  
+        SELECT * FROM user WHERE id = #{id}  
+    </select> 
+    <!-- 查询全部 -->
+    <select id="selectAll" resultType="com.hsh.po.User">  
+        SELECT * FROM user;  
+    </select>   
+</mapper>
